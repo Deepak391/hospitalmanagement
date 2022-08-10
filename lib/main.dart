@@ -1,6 +1,7 @@
-import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myapp/Commons/routes.dart';
+import 'package:myapp/admin%20section/Screens/AdminHomeScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,9 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Center(
-        child: Text("Hello world"),
-      ),
+      home: AdminHomeScreen(),
+      getPages: Routes,
     );
   }
 }
