@@ -1,58 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hospital_management_system/doctor/Controller/appointment_controller.dart';
-import 'package:hospital_management_system/doctor/Models/doctor_appointment.dart';
 import 'package:hospital_management_system/doctor/Screens/appointment_completed_list_screen.dart';
-import 'package:hospital_management_system/doctor/Screens/doctor_upcoming_appointment.dart';
+import 'package:hospital_management_system/doctor/Screens/doctor_due_appointment_main.dart';
+import 'package:hospital_management_system/doctor/Screens/doctor_home.dart';
 import 'package:hospital_management_system/doctor/widget/doctor_current_appointment.dart';
-import 'package:intl/intl.dart';
-import '../Controller/due_appointment_controller.dart';
-import '../widget/doctor_due_appointment.dart';
-import 'doctor_due_appointment_main.dart';
+import 'package:hospital_management_system/doctor/widget/doctor_upcoming_appointment.dart';
 
-class DoctorHome extends StatelessWidget {
-  final AppointmentController appointmentController =
-      Get.put(AppointmentController());
-  final DueAppointmentController dueappointmentController =
-      Get.put(DueAppointmentController());
 
-  DoctorHome({Key? key}) : super(key: key);
+class UpcomingAppointmentScreen extends StatelessWidget {
+  const UpcomingAppointmentScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Dashboard'),
-        ),
-        body: Column(
-          children: [
-            // CurrentAppointment(),
-            help(),
-            ElevatedButton(onPressed: () => Get.offAll(() =>  DoctorHome()), child: Text("Update")),
-            ElevatedButton(
-                child: const Text("Doctor Home"),
-                onPressed: () => Get.to(() => const DueMainScreen())),     
-            ElevatedButton(
-                child: const Text("Add Appointment"),
-                onPressed: () =>
-                    dueappointmentController.notacceptappointmentlist()),
-            ElevatedButton(
-                child: const Text("Appointment Completed"),
-                onPressed: () =>
-                    dueappointmentController.listofappointmentsucess()),        
-          ],
-        ),
-        // body: Column(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: <Widget>[
-        //     ElevatedButton(
-        //         child: const Text("Doctor Home"),
-        //         onPressed: () => Get.to(() => const DueMainScreen())),
-        //         ElevatedButton(
-        //         child: const Text("Add Appointment"),
-        //         onPressed: () => dueappointmentController.notacceptappointmentlist()),
-        //   ],
-        // ),
-        bottomNavigationBar: BottomAppBar(
+      appBar: AppBar(title: const Text('Today Appoinments')),
+      body:  UpcominhAppointment(),
+       bottomNavigationBar: BottomAppBar(
             shape: const CircularNotchedRectangle(),
             child: Container(
                 decoration: const BoxDecoration(
@@ -105,6 +68,7 @@ class DoctorHome extends StatelessWidget {
                           ),
                           onPressed: () =>
                             Get.offAll(() =>  CurrentAppointmentCard()),),
-                    ],),)));
+                    ],),))
+    );
   }
 }
