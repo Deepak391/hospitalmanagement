@@ -28,14 +28,26 @@ class MedicineDetailController extends GetxController with StateMixin<dynamic> {
   }
 
   increaseMedicineQunatity() async {
+    print(m.id);
     await FirebaseFirestore.instance
         .collection("medicines")
         .doc(m.id)
-        .set({"quantity": medicineQuantity.value})
-        .then((value) => print("Success"))
-        .catchError((err) {
-          print(err);
-        });
+        .update({"quantity": medicineQuantity.value}).then(
+      (value) {
+        print("Success increasing Medicine Quantity.");
+        Get.back();
+      },
+    ).catchError((err) {
+      print(err);
+      print("Something went wrong.");
+      Get.back();
+      Get.snackbar(
+        "Something went wrong.",
+        "Error while increasing the qunatity of the medicine.",
+        snackPosition: SnackPosition.TOP,
+      );
+      medicineQuantity.value = m.quantity;
+    });
   }
 
   @override

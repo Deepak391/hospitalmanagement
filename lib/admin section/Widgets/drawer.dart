@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myapp/admin%20section/Screens/AddPatient.dart';
+import 'package:myapp/admin%20section/Screens/MedicineRequestScreen.dart';
+import 'package:myapp/admin%20section/Screens/RestockMedicine.dart';
+import 'package:myapp/admin%20section/Screens/Store.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -23,7 +27,9 @@ class AppDrawer extends StatelessWidget {
                 fontFamily: "Nunito",
               ),
             ),
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(MedicineRequestScreen.routeName);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.medical_information_outlined),
@@ -33,7 +39,9 @@ class AppDrawer extends StatelessWidget {
                 fontFamily: "Nunito",
               ),
             ),
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(RestockMedicine.routeName);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.library_books_outlined),
@@ -52,7 +60,17 @@ class AppDrawer extends StatelessWidget {
               style: TextStyle(fontFamily: "Nunito"),
             ),
             onTap: () {
-              Get.toNamed("/store");
+              Get.toNamed(Store.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.store),
+            title: const Text(
+              "Add Patient",
+              style: TextStyle(fontFamily: "Nunito"),
+            ),
+            onTap: () {
+              Get.toNamed(AddPatient.routeName);
             },
           ),
           ListTile(
