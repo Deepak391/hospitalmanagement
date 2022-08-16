@@ -8,6 +8,14 @@ class Medicine {
   int price;
   int quantity;
 
-  Medicine(this.id, this.image, this.category, this.description, this.name,
-      this.type, this.price, this.quantity);
+  Medicine({
+    required this.id,
+    required this.image,
+    required this.category,
+    required this.description,
+    required this.name,
+    required this.type,
+    required this.price,
+    required this.quantity,
+  });
 }

@@ -12,88 +12,173 @@ class AddOrUpdateMedicine extends GetView<AddUpdateController> {
       appBar: AppBar(
         title: const Text("Add or Update Medicine"),
       ),
-      body: Form(
-        child: ListView(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
+      body: Container(
+        padding: const EdgeInsets.all(10),
+        child: Form(
+          key: controller.key,
+          child: ListView(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Obx(
+                    () => Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                      ),
+                      child: controller.imageUrl.value == ""
+                          ? Container()
+                          : FittedBox(
+                              fit: BoxFit.contain,
+                              child: Image.network(controller.imageUrl.value),
+                            ),
+                    ),
                   ),
-                  child: const FittedBox(),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: TextFormField(
-                    controller: controller.imageUrl,
-                    initialValue: "",
-                    decoration: const InputDecoration(label: Text("Image URL")),
+                  const SizedBox(
+                    width: 10,
                   ),
-                )
-              ],
-            ),
-            TextFormField(
-              initialValue: "",
-              controller: controller.name,
-              decoration: const InputDecoration(label: Text("Name")),
-            ),
-            TextFormField(
-              initialValue: "",
-              maxLines: 3,
-              controller: controller.description,
-              decoration: const InputDecoration(
-                label: Text("Description"),
+                  Expanded(
+                    child: TextFormField(
+                      onChanged: (val) {
+                        controller.checkUrl(val);
+                      },
+                      controller: controller.imageUrlController,
+                      decoration:
+                          const InputDecoration(label: Text("Image URL")),
+                      validator: (value) {
+                        if (value == null && (value != null && value.isEmpty)) {
+                          return "Please provide a valid Value";
+                        }
+
+                        if (value != null) {
+                          if (!value.startsWith("http") &&
+                              !value.startsWith("https")) {
+                            return "Please provide valid URL";
+                          }
+
+                          if (value.endsWith("jpg")) {
+                          } else if (value.endsWith("png")) {
+                          } else if (value.endsWith("jpeg")) {
+                          } else {
+                            return "Please provide valid image type";
+                          }
+                        }
+
+                        return null;
+                      },
+                    ),
+                  )
+                ],
               ),
-            ),
-            TextFormField(
-              initialValue: "",
-              controller: controller.price,
-              decoration: const InputDecoration(
-                label: Text("Price"),
+              TextFormField(
+                controller: controller.nameController,
+                decoration: const InputDecoration(label: Text("Name")),
+                validator: (value) {
+                  if (value == null && (value != null && value.isEmpty)) {
+                    return "Please provide a valid Name.";
+                  }
+                  if (value!.length < 4) {
+                    return "Please provide description greater than 10";
+                  }
+                },
               ),
-            ),
-            TextFormField(
-              initialValue: "",
-              controller: controller.category,
-              decoration: const InputDecoration(
-                label: Text("Category"),
+              TextFormField(
+                maxLines: 3,
+                controller: controller.descriptionController,
+                decoration: const InputDecoration(
+                  label: Text("Description"),
+                ),
+                validator: (value) {
+                  if (value == null || (value != null && value.isEmpty)) {
+                    return "Please provide a valid Description.";
+                  }
+
+                  if (value.length < 10) {
+                    return "Please provide description greater than 10";
+                  }
+                },
               ),
-            ),
-            TextFormField(
-              initialValue: "",
-              controller: controller.type,
-              decoration: const InputDecoration(
-                label: Text("Type"),
+              TextFormField(
+                controller: controller.priceController,
+                decoration: const InputDecoration(
+                  label: Text("Price"),
+                ),
+                validator: (value) {
+                  if (value == null || (value != null && value.isEmpty)) {
+                    return "Please provide a valid Price.";
+                  }
+                  if (int.parse(value) <= 0) {
+                    return "Please provide price greater than 0.";
+                  }
+                },
               ),
-            ),
-            TextFormField(
-              initialValue: "",
-              controller: controller.qunatity,
-              decoration: const InputDecoration(
-                label: Text("Quantity"),
+              TextFormField(
+                controller: controller.categoryContreller,
+                decoration: const InputDecoration(
+                  label: Text("Category"),
+                ),
+                validator: (value) {
+                  if (value == null || (value != null && value.isEmpty)) {
+                    return "Please provide a valid Category.";
+                  }
+
+                  if (value.length < 0 || value.length > 15) {
+                    return "Please provide a valid Category.";
+                  }
+                },
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {},
-                child: const Text("Add Medicine"),
+              TextFormField(
+                controller: controller.typeController,
+                decoration: const InputDecoration(
+                  label: Text("Type"),
+                ),
+                validator: (value) {
+                  if (value == null || (value != null && value.isEmpty)) {
+                    return "Please provide a valid Type.";
+                  }
+
+                  if (value.length < 0 || value.length > 15) {
+                    return "Please provide a valid Type.";
+                  }
+                },
               ),
-            )
-          ],
+              TextFormField(
+                controller: controller.qunatityController,
+                decoration: const InputDecoration(
+                  label: Text("Quantity"),
+                ),
+                validator: (value) {
+                  if (value == null || (value != null && value.isEmpty)) {
+                    return "Please provide a valid Quantity.";
+                  }
+
+                  if (int.parse(value) <= 0) {
+                    return "Please provide a quantity > 10";
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Obx(
+                () => SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: () {
+                      controller.checkSignup();
+                    },
+                    child: Text(controller.buttonText.value),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

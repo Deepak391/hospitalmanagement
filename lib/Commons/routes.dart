@@ -1,11 +1,20 @@
 import 'package:get/route_manager.dart';
+import 'package:myapp/admin%20section/Bindings/AddOrUpdateMedicineBinding.dart';
+import 'package:myapp/admin%20section/Bindings/AddPatient.dart';
 import 'package:myapp/admin%20section/Bindings/AdminHomeBinding.dart';
 import 'package:myapp/admin%20section/Bindings/MedicineBinding.dart';
+import 'package:myapp/admin%20section/Bindings/MrdBinding.dart';
 import 'package:myapp/admin%20section/Bindings/StoreBinding.dart';
+import 'package:myapp/admin%20section/Bindings/restockBinding.dart';
+import 'package:myapp/admin%20section/Controllers/RestockController.dart';
 import 'package:myapp/admin%20section/Controllers/StoreController.dart';
 import 'package:myapp/admin%20section/Screens/AddOrUpdateMedicine.dart';
+import 'package:myapp/admin%20section/Screens/AddPatient.dart';
 import 'package:myapp/admin%20section/Screens/AdminHomeScreen.dart';
 import 'package:myapp/admin%20section/Screens/Medicine%20Details.dart';
+import 'package:myapp/admin%20section/Screens/MedicineRequest.dart';
+import 'package:myapp/admin%20section/Screens/MedicineRequestScreen.dart';
+import 'package:myapp/admin%20section/Screens/RestockMedicine.dart';
 import 'package:myapp/admin%20section/Screens/Store.dart';
 
 var Routes = [
@@ -27,6 +36,21 @@ var Routes = [
   GetPage(
     name: AddOrUpdateMedicine.routeName,
     page: () => AddOrUpdateMedicine(),
-    binding: MedicineBinding(),
+    binding: AddOrUpdateBinding(),
+  ),
+  GetPage(
+    name: AddPatient.routeName,
+    page: () => AddPatient(),
+    binding: AddPatientBinding(),
+  ),
+  GetPage(
+    name: MedicineRequestScreen.routeName,
+    page: () => MedicineRequestScreen(),
+    binding: MrdBinding(),
+  ),
+  GetPage(
+    name: RestockMedicine.routeName,
+    page: () => RestockMedicine(),
+    binding: RestockBinding(),
   ),
 ];

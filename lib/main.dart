@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/Commons/routes.dart';
 import 'package:myapp/admin%20section/Bindings/AdminHomeBinding.dart';
+import 'package:myapp/admin%20section/Screens/AddPatient.dart';
 import 'package:myapp/admin%20section/Screens/AdminHomeScreen.dart';
+import 'package:myapp/admin%20section/Screens/MedicineRequestScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: "/adminHome",
+      initialRoute: AdminHomeScreen.routeName,
       initialBinding: AdminHomeBinding(),
       home: AdminHomeScreen(),
       getPages: Routes,

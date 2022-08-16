@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:lottie/lottie.dart';
 import 'package:myapp/admin%20section/Controllers/MedicineDetailsController.dart';
 
 class MedicineDetail extends GetView<MedicineDetailController> {
@@ -164,6 +165,9 @@ class MedicineDetail extends GetView<MedicineDetailController> {
           onError: (error) => Container(
             padding: const EdgeInsets.all(10),
             child: Text(error.toString()),
+          ),
+          onLoading: Center(
+            child: Lottie.asset('assets/loader.json'),
           ),
         ),
       ),
