@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/admin%20section/Screens/AddPatient.dart';
+import 'package:myapp/admin%20section/Screens/AdminHomeScreen.dart';
+import 'package:myapp/admin%20section/Screens/AppointmentLists.dart';
 import 'package:myapp/admin%20section/Screens/MedicineRequestScreen.dart';
 import 'package:myapp/admin%20section/Screens/RestockMedicine.dart';
 import 'package:myapp/admin%20section/Screens/Store.dart';
@@ -18,6 +20,18 @@ class AppDrawer extends StatelessWidget {
             child: Container(
               color: Colors.grey,
             ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text(
+              "Home",
+              style: TextStyle(
+                fontFamily: "Nunito",
+              ),
+            ),
+            onTap: () {
+              Get.toNamed(AdminHomeScreen.routeName);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.medication_outlined),
@@ -51,7 +65,9 @@ class AppDrawer extends StatelessWidget {
                 fontFamily: "Nunito",
               ),
             ),
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(AppointmentList.routeName);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.store),
@@ -64,7 +80,7 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.store),
+            leading: const Icon(Icons.group_add_rounded),
             title: const Text(
               "Add Patient",
               style: TextStyle(fontFamily: "Nunito"),

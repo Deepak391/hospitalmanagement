@@ -87,7 +87,7 @@ class MRDController extends GetxController with StateMixin<dynamic> {
       if (restock) {
         await FirebaseFirestore.instance
             .collection("restock")
-            .add({"med": m.id});
+            .add({"med": m.name});
       }
     }
 
