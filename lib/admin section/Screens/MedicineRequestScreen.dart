@@ -16,39 +16,41 @@ class MedicineRequestScreen extends GetView<MRDController> {
         title: const Text("Medicine Requests"),
       ),
       body: controller.obx(
-        (state) => Container(
-          child: RefreshIndicator(
-            onRefresh: () async {
-              controller.getMedReq();
-            },
-            child: ListView(
-              children: [
-                ...controller.medReq
-                    .where((p0) => p0["status"] == "pending")
-                    .map(
-                      (element) => RequestCard(
-                        id: element["id"],
-                        medicines: element["medicines"],
-                        status: element["status"],
-                        patientName: element["patient"]["fullName"],
-                        quantityArr: element["quantityArr"],
-                        total: element["Total Price"],
+        (state) => Obx(
+          () => Container(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                controller.getMedReq();
+              },
+              child: ListView(
+                children: [
+                  ...controller.medReq
+                      .where((p0) => p0["status"] == "pending")
+                      .map(
+                        (element) => RequestCard(
+                          id: element["id"],
+                          medicines: element["medicines"],
+                          status: element["status"],
+                          patientName: element["patient"]["fullName"],
+                          quantityArr: element["quantityArr"],
+                          total: element["Total Price"],
+                        ),
+                      )
+                      .toList(),
+                  if (controller.medReq
+                      .where((p0) => p0["status"] == "pending")
+                      .isEmpty)
+                    Container(
+                      margin: const EdgeInsets.only(top: 250),
+                      child: const Center(
+                        child: Text(
+                          "No Medicine Request.",
+                          style: TextStyle(fontSize: 20),
+                        ),
                       ),
                     )
-                    .toList(),
-                if (controller.medReq
-                    .where((p0) => p0["status"] == "pending")
-                    .isEmpty)
-                  Container(
-                    margin: const EdgeInsets.only(top: 250),
-                    child: const Center(
-                      child: Text(
-                        "No Medicine Request.",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                  )
-              ],
+                ],
+              ),
             ),
           ),
         ),

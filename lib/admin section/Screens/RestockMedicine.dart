@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myapp/admin%20section/Controllers/RestockController.dart';
+import 'package:myapp/admin%20section/Controllers/StoreController.dart';
 
 class RestockMedicine extends GetView<RestockController> {
   static final routeName = "/restock";
-  const RestockMedicine({Key? key}) : super(key: key);
+  RestockMedicine({Key? key}) : super(key: key);
+
+  var medicines = Get.find<StoreController>().medicines;
 
   @override
   Widget build(BuildContext context) {
@@ -13,40 +17,39 @@ class RestockMedicine extends GetView<RestockController> {
       appBar: AppBar(
         title: const Text("Restock Screen"),
       ),
-      body: controller.obx(
-        (state) => Container(
-          child: RefreshIndicator(
-            onRefresh: () async {
-              controller.getRestockReq();
-            },
-            child: ListView(children: [
-              ...controller.restock.value
-                  .map((e) => Card(
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(e["name"]),
-                                  Text("Quantity : ${e["quantity"]}")
-                                ],
-                              ),
-                            ],
+      body: Container(
+        padding: const EdgeInsets.all(10),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            // controller.getRestockReq();
+          },
+          child: Obx(
+            () => controller.restock.length > 0
+                ? ListView(children: [
+                    ...controller.restock.value.map((element) {
+                      return Dismissible(
+                        key: ValueKey(element.id),
+                        onDismissed: (direction) {
+                          controller.deleteRestockReq(element.id);
+                        },
+                        child: Card(
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              children: [Text(element.med)],
+                            ),
                           ),
                         ),
-                      ))
-                  .toList()
-            ]),
+                      );
+                    }).toList(),
+                  ])
+                : const Center(
+                    child: Text(
+                      "No Medicine Restock Request.",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
           ),
-        ),
-        onLoading: Center(
-          child: Lottie.asset('assets/loader.json'),
-        ),
-        onError: (error) => const Center(
-          child: Text("Something went wrong."),
         ),
       ),
     );

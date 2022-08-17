@@ -4,7 +4,7 @@ import 'package:myapp/admin%20section/Controllers/AdminHomeScreen_Controller.dar
 import 'package:myapp/admin%20section/Widgets/drawer.dart';
 
 class AdminHomeScreen extends GetView<AdminHomeController> {
-  static final routeName = "/adminHome";
+  static final routeName = "/";
   const AdminHomeScreen({Key? key}) : super(key: key);
 
   @override
