@@ -21,7 +21,7 @@ class userPrescription extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Image.asset(
+              child: Image.network(
                 pdoc.docImage,
                 height: 150,
                 width: 150,
@@ -31,7 +31,7 @@ class userPrescription extends StatelessWidget {
               height: 30,
             ),
             Container(
-              height: 710,
+              height: 810,
               width: 625,
               decoration: const BoxDecoration(
                   color: Colors.white,

@@ -17,7 +17,7 @@ class UserMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: Color(0xFFdfe4ea),
-      body: Padding(
+      body: Obx(() => controller.isLoading == true ? Center(child: CircularProgressIndicator()): Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Column(
@@ -97,7 +97,7 @@ class UserMainScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      ),)   
     );
   }
 }

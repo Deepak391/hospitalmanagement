@@ -6,6 +6,7 @@ import 'package:xid/xid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ApptController extends GetxController {
+  var isLoading = false.obs;
   var indexDaytime = 0.obs;
   var currentIndex = 0.obs;
   final emergencyIsSelected = false.obs;
@@ -17,6 +18,7 @@ class ApptController extends GetxController {
   Rx<ApptFilterStatus> status = ApptFilterStatus.Upcoming.obs;
   Rx<Alignment> alignment = Alignment.centerLeft.obs;
   RxList<Appointment> allApptSchedules = <Appointment>[].obs;
+  RxList<Appointment> nullsch = <Appointment>[].obs;
   RxList<Appointment> filteredApptSchedules = <Appointment>[].obs;
 
   @override
@@ -24,42 +26,44 @@ class ApptController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     getappt();
-    filteredApptSchedules =
-        allApptSchedules.where((p) => p.status == 'Upcoming').toList().obs;
   }
 
   void getappt() async {
-    
-      var d = await FirebaseFirestore.instance
-          .collection("userAppointment")
-          .get()
-          .then((value) => value.docs);
-      d.forEach((ele) {
-        allApptSchedules.add(Appointment(
-          ele.data()['id'],
-          ele.data()['docName'],
-          ele.data()['docImage'],
-          ele.data()['docSpecilization'],
-          ele.data()['reservedDate'],
-          ele.data()['reservedTime'],
-          ele.data()['emergency'],
-          ele.data()['docStatus'],
-          ele.data()['status'],
-        ));
-      });
- 
+    isLoading.value = true;
+    allApptSchedules([]);
+
+    var d = await FirebaseFirestore.instance
+        .collection("userAppointment")
+        .get()
+        .then((value) => value.docs);
+    d.forEach((ele) {
+      allApptSchedules.add(Appointment(
+        ele.id,
+        ele.data()['docName'],
+        ele.data()['docImage'],
+        ele.data()['docSpecilization'],
+        ele.data()['reservedDate'],
+        ele.data()['reservedTime'],
+        ele.data()['emergency'],
+        ele.data()['docStatus'],
+        ele.data()['status'],
+      ));
+    });
+    filteredApptSchedules =
+        allApptSchedules.where((p) => p.status == 'Upcoming').toList().obs;
+    isLoading.value = false;
   }
 
   final List<String> timeslots = [
-    '10:00 AM',
-    '11:00 AM',
     '12:00 PM',
     '01:00 PM',
     '02:00 PM',
     '03:00 PM',
     '04:00 PM',
     '05:00 PM',
-    '06:00 PM'
+    '06:00 PM',
+    '07:00 PM',
+    '08:00 PM'
   ];
 
   reshudule(
@@ -67,25 +71,32 @@ class ApptController extends GetxController {
     String docName,
     String docImage,
     String Specilization,
-  ) {
+  ) async {
     final currentDate = lastDayOfMonth.add(Duration(days: indexDaytime.value));
-    allApptSchedules.removeWhere((element) => element.id == id);
-    final newAppoint = Appointment(
-      Xid().toString(),
-      docName,
-      docImage,
-      Specilization,
-      DateFormat('E, MMM d').format(currentDate),
-      timeslots[currentIndex.value],
-      emergencyIsSelected.value,
-      emergencyIsSelected.value,
-      "Upcoming",
-    );
-    allApptSchedules.add(newAppoint);
+    
+    await FirebaseFirestore.instance
+        .collection("userAppointment")
+        .doc(id)
+        .update({
+      "reservedDate": DateFormat('E, MMM d').format(currentDate),
+      "reservedTime": timeslots[currentIndex.value]
+    });
+    getappt();
     DaytimeArr[indexDaytime.value][currentIndex.value]
         .update('status', (value) => 'filled');
     Get.snackbar(
         "Booking Status", "Your Appointment has Succesfully Resheduled!");
+  }
+
+  void cancleBooking(String id) async {
+    await FirebaseFirestore.instance
+        .collection("userAppointment")
+        .doc(id)
+        .update({"status": "Cancel", "docStatus": false, "emergency": false});
+    getappt();
+    DaytimeArr[indexDaytime.value][currentIndex.value]
+        .update('status', (value) => 'available');
+    Get.snackbar("Booking Status", "Your Appointment has cancled!");
   }
 
   datacal(int x) {
@@ -116,14 +127,6 @@ class ApptController extends GetxController {
     filteredApptSchedules.refresh();
   }
 
-  void cancleBooking(String id) {
-    allApptSchedules.removeWhere((element) => element.id == id);
-
-    DaytimeArr[indexDaytime.value][currentIndex.value]
-        .update('status', (value) => 'available');
-    Get.snackbar("Booking Status", "Your Appointment has cancled!");
-  }
-
   var monthyear = DateFormat('MMMM yyyy').format(DateTime.now());
 
   void changeDay(int selectedDayIndex) {
@@ -145,7 +148,7 @@ class ApptController extends GetxController {
     String docName,
     String docImage,
     String Specilization,
-  ) {
+  ) async {
     var xid = Xid();
     final currentDate = lastDayOfMonth.add(Duration(days: indexDaytime.value));
 
@@ -155,38 +158,38 @@ class ApptController extends GetxController {
             lastDayOfMonth.add(Duration(days: indexDaytime.value + i));
         DaytimeArr[indexDaytime.value + i][currentIndex.value]
             .update('status', (value) => 'filled');
-        final newAppoint = Appointment(
-          Xid().toString(),
-          docName,
-          docImage,
-          Specilization,
-          DateFormat('E, MMM d').format(currentDate),
-          timeslots[currentIndex.value],
-          emergencyIsSelected.value,
-          emergencyIsSelected.value,
-          "Upcoming",
-        );
-        allApptSchedules.add(newAppoint);
+        await FirebaseFirestore.instance.collection("userAppointment").add({
+          //'id': Xid().toString(),
+          'docName': docName,
+          'docImage': docImage,
+          'docSpecilization': Specilization,
+          'reservedDate': DateFormat('E, MMM d').format(currentDate),
+          'reservedTime': timeslots[currentIndex.value],
+          'emergency': emergencyIsSelected.value,
+          'docStatus': emergencyIsSelected.value,
+          'status': "Upcoming"
+        });
       }
       Get.snackbar(
           "Booking Status", "You have Succesfully Shedule a Regular Checkups");
     } else {
       DaytimeArr[indexDaytime.value][currentIndex.value]
           .update('status', (value) => 'filled');
-      final newAppoint = Appointment(
-        xid.toString(),
-        docName,
-        docImage,
-        Specilization,
-        DateFormat('E, MMM d').format(currentDate),
-        timeslots[currentIndex.value],
-        emergencyIsSelected.value,
-        emergencyIsSelected.value,
-        "Upcoming",
-      );
-      allApptSchedules.add(newAppoint);
+      await FirebaseFirestore.instance.collection("userAppointment").add({
+        //'id': Xid().toString(),
+        'docName': docName,
+        'docImage': docImage,
+        'docSpecilization': Specilization,
+        'reservedDate': DateFormat('E, MMM d').format(currentDate),
+        'reservedTime': timeslots[currentIndex.value],
+        'emergency': emergencyIsSelected.value,
+        'docStatus': emergencyIsSelected.value,
+        'status': "Upcoming"
+      });
       Get.snackbar("Booking Status", "You have Succesfully Booked a Slot");
     }
+    filteredApptSchedules.assignAll(nullsch);
+    getappt();
   }
 
   void selectdate(int selectedTimeIndex) {

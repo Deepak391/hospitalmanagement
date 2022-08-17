@@ -4,6 +4,7 @@ import '../Model/userdoctor_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserController extends GetxController {
+  var isLoading = false.obs;
   RxInt currentBottomNavItemIndex = 0.obs;
   RxList<Doctor> allDoctors = <Doctor>[].obs;
   RxList<Doctor> filteredDoctors = <Doctor>[].obs;
@@ -15,10 +16,11 @@ class UserController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     getdoc();
-    filteredDoctors = allDoctors.where((p) => p.type == 'All' ).toList().obs;
+    
   }
 
   void getdoc() async {
+    isLoading.value = true;
     var d = await FirebaseFirestore.instance
         .collection("userDoctor")
         .get()
@@ -32,6 +34,8 @@ class UserController extends GetxController {
           ele.data()['type'],
           ele.data()['docId']));
     });
+    filteredDoctors.assignAll(allDoctors);
+    isLoading.value = false;
   }
 
   void switchBetweenBottomNavigationItems(int currentIndex) {

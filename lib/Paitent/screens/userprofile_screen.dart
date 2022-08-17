@@ -78,6 +78,10 @@ class UserProfileScreen extends StatelessWidget {
                 text: cuser.name),
             ProfileCard(
                 icon: 'assets/icons/User.svg',
+                title: 'Email: ',
+                text: cuser.name),
+            ProfileCard(
+                icon: 'assets/icons/User.svg',
                 title: 'Phone: ',
                 text: cuser.phNum),
             ProfileCard(
@@ -109,12 +113,7 @@ class UserProfileScreen extends StatelessWidget {
                   print("Logout");
                 },
                 child: Row(
-                  children: [
-                    Icon(Icons.logout),
-                    SizedBox(
-                      child: Text("Logout"),
-                    )
-                  ],
+                  children: [Icon(Icons.logout), Text("Logout")],
                 ),
               ),
             )

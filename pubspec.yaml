@@ -50,6 +50,7 @@ dependencies:
   xid: ^1.0.7
   firebase_core: ^1.20.1
   cloud_firestore: ^3.4.4
+  introduction_screen: ^3.0.1
 
 dev_dependencies:
   flutter_test:

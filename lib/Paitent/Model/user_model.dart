@@ -1,5 +1,6 @@
 class User {
   String name;
+  String email;
   String image;
   int age;
   String sex;
@@ -10,6 +11,7 @@ class User {
 
   User(
     this.name,
+    this.email,
     this.image,
     this.age,
     this.sex,
@@ -21,6 +23,7 @@ class User {
   static List<User> Userlist = [
     User(
       "Deepak Saini",
+      "Deepak@test.com",
       "assets/images/profile.png",
       22,
       "Male",
