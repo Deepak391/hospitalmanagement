@@ -81,6 +81,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/
+    - assets/icons/
     - assets/loader.json
   #   - images/a_dot_ham.jpeg
 
@@ -103,8 +105,8 @@ flutter:
         - asset: assets/fonts/Quicksand-Regular.ttf
         - asset: assets/fonts/Quicksand-Light.ttf
         - asset: assets/fonts/Quicksand-Medium.ttf
-        - asset: assets/fonts/Quicksand-SemiBold.ttf         
-    
+        - asset: assets/fonts/Quicksand-SemiBold.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

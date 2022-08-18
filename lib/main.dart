@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:myapp/Commons/routes.dart';
+import 'package:myapp/common/routes.dart';
 import 'package:myapp/Paitent/screens/userHome_screen.dart';
 import 'package:myapp/admin%20section/Bindings/AdminHomeBinding.dart';
 import 'package:myapp/admin%20section/Bindings/LoginBinding.dart';
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
               ? AdminHomeBinding()
               : null
           : null,
-      // home: AdminHomeScreen(),
+      home: UserHomeScreen(),
       getPages: Routes,
       theme: ThemeData(
         fontFamily: "Quicksand",

@@ -7,7 +7,7 @@ class SearchBar extends StatelessWidget {
       children: <Widget>[
         Container(
           width: MediaQuery.of(context).size.width * 0.8,
-          height: 40,
+          height: 50,
           padding: EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
             color: Color(0xffF2F2F2),
