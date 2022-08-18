@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:myapp/admin%20section/Screens/AdminHomeScreen.dart';
 
 class LoginController extends GetxController with StateMixin {
   var loading = false.obs;
@@ -77,6 +78,19 @@ class LoginController extends GetxController with StateMixin {
 
       if (d.data()!["role"] == "Admin") {
         print("Admin");
+
+        await FirebaseFirestore.instance
+            .collection("admins")
+            .doc(user.uid)
+            .get()
+            .then((value) {
+          getStorage.write("image", value.data()!["image"]);
+          getStorage.write("phoneNumber", value.data()!["phoneNumber"]);
+          getStorage.write("email", value.data()!["email"]);
+          getStorage.write("username", value.data()!["username"]);
+        });
+
+        Get.toNamed(AdminHomeScreen.routeName);
       } else if (d.data()!["role"] == "Doctor") {
         print("Doctor");
       } else {

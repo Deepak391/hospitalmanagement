@@ -15,7 +15,7 @@ class ProfilePage extends StatelessWidget {
         getStorage.read("username") != null ? getStorage.read("username") : "";
     final email = getStorage.read("email");
     final phoneNumber = getStorage.read("phoneNumber");
-    final address = getStorage.read("address");
+    final address = getStorage.read("image");
 
     final List<Color> circleColors = [Colors.red, Colors.blue, Colors.green];
     final List<Color> newcircleColors = [
@@ -68,7 +68,7 @@ class ProfilePage extends StatelessWidget {
                       radius: 50,
                       backgroundColor: Colors.black54,
                       backgroundImage: NetworkImage(
-                        getStorage.read("imageUrl"),
+                        getStorage.read("image"),
                       ),
                     ),
                   ),
@@ -87,28 +87,30 @@ class ProfilePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // TextWidget.getText("Email : ", "Quicksand", 20),
-                    // TextWidget.getText("${email}", "Quicksand", 20),
+                    const Text(
+                      "Email : ",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Text(
+                      "${email}",
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // TextWidget.getText("Phone Number : ", "Quicksand", 20),
-                    // TextWidget.getText("${phoneNumber}", "Quicksand", 20),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // TextWidget.getText("Address : ", "Quicksand", 20),
-                    // TextWidget.getText("${address}", "Quicksand", 20),
+                    const Text(
+                      "Phone Number : ",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Text(
+                      "${phoneNumber}",
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ],
                 ),
                 SizedBox(

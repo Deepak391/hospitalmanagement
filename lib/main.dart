@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/Commons/routes.dart';
 import 'package:myapp/admin%20section/Bindings/AdminHomeBinding.dart';
+import 'package:myapp/admin%20section/Bindings/LoginBinding.dart';
 import 'package:myapp/admin%20section/Controllers/StoreController.dart';
 import 'package:myapp/admin%20section/Screens/AddPatient.dart';
 import 'package:myapp/admin%20section/Screens/AdminHomeScreen.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: AppointmentList.routeName,
       initialBinding: AdminHomeBinding(),
-      home: AdminHomeScreen(),
+      // home: AdminHomeScreen(),
       getPages: Routes,
       theme: ThemeData(
         fontFamily: "Quicksand",

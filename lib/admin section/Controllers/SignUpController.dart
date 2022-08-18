@@ -150,7 +150,8 @@ class SignUpController extends GetxController {
           .set({"role": dropdownValue.value});
 
       if (dropdownValue.value == "Admin") {
-        await FirebaseFirestore.instance.collection("admins").doc(user.uid).set(
+        print(uid);
+        await FirebaseFirestore.instance.collection("admins").doc(uid).set(
           {
             "email": email,
             "username": username,
@@ -159,7 +160,7 @@ class SignUpController extends GetxController {
           },
         );
       } else if (dropdownValue.value == "Doctor") {
-        await FirebaseFirestore.instance.collection("admins").doc(user.uid).set(
+        await FirebaseFirestore.instance.collection("admins").doc(uid).set(
           {
             "email": email,
             "fullName": username,
@@ -173,10 +174,7 @@ class SignUpController extends GetxController {
           },
         );
       } else {
-        await FirebaseFirestore.instance
-            .collection("patients")
-            .doc(user.uid)
-            .set(
+        await FirebaseFirestore.instance.collection("patients").doc(uid).set(
           {
             "email": email,
             "username": username,
@@ -198,6 +196,7 @@ class SignUpController extends GetxController {
     } catch (e) {
       loading(false);
       print(e);
+      // change();
       Get.snackbar(
         "Error",
         "User already exists.",

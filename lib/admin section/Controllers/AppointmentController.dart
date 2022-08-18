@@ -63,6 +63,7 @@ class AppointmentController extends GetxController with StateMixin {
   }
 
   getAppointments() async {
+    appointments([]);
     // try {
     var d = await FirebaseFirestore.instance
         .collection("appointmentList")
@@ -73,19 +74,18 @@ class AppointmentController extends GetxController with StateMixin {
     });
 
     d.forEach((ele) {
-      // print(ele.data());
-      var d = DateFormat("hh:mm a").format(ele.data()["date_time"].toDate());
-
-      var m = DateFormat("dd MM yyyy").format(ele.data()["date_time"].toDate());
-      // print(d.runtimeType);
+      print(ele.data()["date_time"]);
+      var dt =
+          DateTime.fromMicrosecondsSinceEpoch(ele.data()["date_time"].seconds)
+              .millisecondsSinceEpoch;
       appointments.add(Appointment(
         id: ele.id,
         docName: ele.data()["docName"],
         docImage: ele.data()["docImage"],
         docSpecilization: ele.data()["docSpecilization"],
-        reservedDate: m,
-        reservedTime: d,
-        date_time: ele.data()["date_time"],
+        reservedDate: ele.data()["reservedDate"],
+        reservedTime: ele.data()["reservedTime"],
+        date_time: dt,
         emergency: ele.data()["emergency"],
         docStatus: ele.data()["docStatus"],
         patientName: ele.data()["patient_name"],
@@ -93,14 +93,7 @@ class AppointmentController extends GetxController with StateMixin {
     });
 
     appointments.sort((a, b) {
-      var d = DateFormat("dd MM yyyy hh:mm a")
-          .format((a.date_time as Timestamp).toDate());
-
-      var m = DateFormat("dd MM yyyy hh:mm a")
-          .format((b.date_time as Timestamp).toDate());
-
-      // print(d.compareTo(m));
-      return d.compareTo(m);
+      return a.date_time.compareTo(b.date_time);
     });
 
     print(appointments);
