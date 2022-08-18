@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:myapp/Paitent/screens/userHome_screen.dart';
 import 'package:myapp/admin%20section/Screens/AdminHomeScreen.dart';
+import 'package:myapp/doctor/Screens/doctor_home.dart';
 
 class LoginController extends GetxController with StateMixin {
   var loading = false.obs;
@@ -95,8 +97,10 @@ class LoginController extends GetxController with StateMixin {
         Get.toNamed(AdminHomeScreen.routeName);
       } else if (d.data()!["role"] == "Doctor") {
         print("Doctor");
+        Get.toNamed(DoctorHome.routeName);
       } else {
         print("Patient");
+        Get.toNamed(UserHomeScreen.routeName);
       }
 
       await Future.delayed(

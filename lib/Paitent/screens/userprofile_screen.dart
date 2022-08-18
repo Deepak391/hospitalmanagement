@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart' as FA;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_storage/get_storage.dart';
 import '/Paitent/Model/user_model.dart';
 import '../controller/userAppt_controller.dart';
 import '../widget/UserProfile_card.dart';
@@ -8,7 +10,9 @@ import '../widget/UserProfile_card.dart';
 final ApptController controller = Get.put(ApptController());
 
 class UserProfileScreen extends StatelessWidget {
-  const UserProfileScreen({Key? key}) : super(key: key);
+  UserProfileScreen({Key? key}) : super(key: key);
+
+  GetStorage getStorage = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +114,15 @@ class UserProfileScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   print("Logout");
+                  FA.FirebaseAuth.instance.signOut();
+                  getStorage.remove("userID");
+                  getStorage.remove("username");
+                  getStorage.remove("email");
+                  getStorage.remove("phoneNumber");
+                  getStorage.remove("address");
+                  getStorage.remove("intro");
+                  // getStorage.erase();
+                  Get.toNamed("/login");
                 },
                 child: Row(
                   children: [

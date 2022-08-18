@@ -18,7 +18,7 @@ class UserHomeScreen extends StatelessWidget {
     const UserMainScreen(),
     const UserAppList(),
     const Medshop(),
-    const UserProfileScreen(),
+    UserProfileScreen(),
   ];
 
   @override
