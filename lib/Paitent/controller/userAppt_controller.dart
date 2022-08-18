@@ -31,31 +31,9 @@ class ApptController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     getappt();
-    //getuser();
   }
 
-  // void getuser() async {
-  //   isLoading.value = true;
-  //   var d = await FirebaseFirestore.instance
-  //       .collection("userPatient")
-  //       .get()
-  //       .then((value) => value.docs);
-  //   d.forEach((ele) {
-  //     alluser.add(User(
-  //         ele.data()['name'],
-  //         ele.data()['email'],
-  //         ele.data()['image'],
-  //         ele.data()['age'],
-  //         ele.data()['sex'],
-  //         ele.data()['userId'],
-  //         ele.data()['phNum']));
-  //   });
-  //   RxList<User> currentUser =
-  //       alluser.where((p0) => p0.userId == "P001").toList().obs;
-  //   print(currentUser[0]);
-  //   isLoading.value = false;
-  // }
-
+  
   void getappt() async {
     isLoading.value = true;
     allApptSchedules([]);
@@ -112,7 +90,7 @@ class ApptController extends GetxController {
   ) async {
     int t = int.parse(timeslots[currentIndex.value].substring(0, 2));
     final pastime = DateTime(lastDayOfMonth.year, lastDayOfMonth.month,
-        lastDayOfMonth.day + indexDaytime.value, t);
+        lastDayOfMonth.day + indexDaytime.value, t + 12);
     final currentDate = lastDayOfMonth.add(Duration(days: indexDaytime.value));
 
     await FirebaseFirestore.instance
@@ -196,7 +174,7 @@ class ApptController extends GetxController {
     int t = int.parse(timeslots[currentIndex.value].substring(0, 2));
 
     final pastime = DateTime(lastDayOfMonth.year, lastDayOfMonth.month,
-        lastDayOfMonth.day + indexDaytime.value, t);
+        lastDayOfMonth.day + indexDaytime.value, t + 12);
 
     final currentDate = lastDayOfMonth.add(Duration(days: indexDaytime.value));
     final docuser =

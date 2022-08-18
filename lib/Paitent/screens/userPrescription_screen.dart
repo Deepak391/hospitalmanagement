@@ -97,11 +97,9 @@ class userPrescription extends StatelessWidget {
                   SizedBox(
                     height: 550,
                     child: ListView.builder(
-                      itemCount: 10,
+                      itemCount: 4,
                       itemBuilder: (_, index) {
-                        Prescription pre =
-                            Prescription.Prescriptionlist.firstWhere(
-                                (element) => element.id == 'P001');
+                        Prescription pre = controller.allpre[0];
 
                         return Padding(
                           padding: EdgeInsets.all(5),
@@ -113,7 +111,7 @@ class userPrescription extends StatelessWidget {
                             child: Padding(
                               padding: EdgeInsets.all(2),
                               child: ListTile(
-                                leading: Image.asset(pre.image),
+                                leading: Image.network(pre.image),
                                 title: Text(
                                   pre.name,
                                   style: const TextStyle(
@@ -139,7 +137,7 @@ class userPrescription extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          print("Downlaod Prescription");
+                          //downloadFile(controller.appointmentcompleted[index].id);;
                         },
                         child: Container(
                           padding: EdgeInsets.all(10),

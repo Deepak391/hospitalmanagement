@@ -45,52 +45,6 @@ class Appointment {
     this.date_time,
   );
 
-  // static List<Appointment> ScheduledAppointments = [
-  //   Appointment(
-  //     "A001",
-  //     "Dr. Stella Kane",
-  //     "assets/images/doctor1.png",
-  //     "General Physician - Flower Hospital",
-  //     "Mon, Aug 11",
-  //     "11:00 AM",
-  //     false,
-  //     true,
-  //     "Upcoming",
-  //   ),
-  //   Appointment(
-  //     "A004",
-  //     "Dr. David Kemp",
-  //     "assets/images/doctor1.png",
-  //     "Heart Surgeon - Flower Hospitals",
-  //     "Mon, Aug 15",
-  //     "12:00 AM",
-  //     false,
-  //     false,
-  //     "Upcoming",
-  //   ),
-  //   Appointment(
-  //     "A002",
-  //     "Dr. Joseph Cart",
-  //     "assets/images/doctor2.png",
-  //     "Eye Surgeon - Flower Hospitals",
-  //     "Mon, Aug 10",
-  //     "12:00 PM",
-  //     true,
-  //     true,
-  //     "Complete",
-  //   ),
-  //   Appointment(
-  //     "A003",
-  //     "Dr. Stephanie",
-  //     "assets/images/doctor3.png",
-  //     "Dental Surgeon - Flower Hospitals",
-  //     "Mon, Aug 13",
-  //     "01:00 PM",
-  //     false,
-  //     false,
-  //     "Cancel",
-  //   ),
-  // ];
 }
 
 class ApptFilterStatustype {
