@@ -1,0 +1,118 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:myapp/admin%20section/Screens/AddPatient.dart';
+import 'package:myapp/admin%20section/Screens/AdminHomeScreen.dart';
+import 'package:myapp/admin%20section/Screens/AppointmentLists.dart';
+import 'package:myapp/admin%20section/Screens/MedicineRequestScreen.dart';
+import 'package:myapp/admin%20section/Screens/RestockMedicine.dart';
+import 'package:myapp/admin%20section/Screens/Store.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get_storage/get_storage.dart';
+
+class AppDrawer extends StatelessWidget {
+  GetStorage getStorage = GetStorage();
+  AppDrawer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 200,
+            child: Container(
+              color: Colors.grey,
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text(
+              "Home",
+              style: TextStyle(
+                fontFamily: "Nunito",
+              ),
+            ),
+            onTap: () {
+              Get.toNamed(AdminHomeScreen.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.medication_outlined),
+            title: const Text(
+              "Customer Medicine Request",
+              style: TextStyle(
+                fontFamily: "Nunito",
+              ),
+            ),
+            onTap: () {
+              Get.toNamed(MedicineRequestScreen.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.medical_information_outlined),
+            title: const Text(
+              "Restock Medicine Request",
+              style: TextStyle(
+                fontFamily: "Nunito",
+              ),
+            ),
+            onTap: () {
+              Get.toNamed(RestockMedicine.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.library_books_outlined),
+            title: const Text(
+              "Appointment List",
+              style: TextStyle(
+                fontFamily: "Nunito",
+              ),
+            ),
+            onTap: () {
+              Get.toNamed(AppointmentList.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.store),
+            title: const Text(
+              "Medicine Store",
+              style: TextStyle(fontFamily: "Nunito"),
+            ),
+            onTap: () {
+              Get.toNamed(Store.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.group_add_rounded),
+            title: const Text(
+              "Add Patient",
+              style: TextStyle(fontFamily: "Nunito"),
+            ),
+            onTap: () {
+              Get.toNamed(AddPatient.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout_sharp),
+            title: const Text(
+              "Logout",
+              style:
+                  TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.bold),
+            ),
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+              getStorage.remove("userID");
+              getStorage.remove("username");
+              getStorage.remove("email");
+              getStorage.remove("phoneNumber");
+              getStorage.remove("address");
+              getStorage.remove("intro");
+              // getStorage.erase();
+              Get.toNamed("/login");
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}

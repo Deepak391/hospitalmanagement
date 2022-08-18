@@ -10,7 +10,8 @@ import '../screens/userMain_screen.dart';
 final UserController controller = Get.put(UserController());
 
 class UserHomeScreen extends StatelessWidget {
- 
+  static const routeName = "/patientHome";
+
   UserHomeScreen({Key? key}) : super(key: key);
 
   final List<Widget> screen = [
