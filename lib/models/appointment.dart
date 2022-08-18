@@ -9,7 +9,7 @@ class Appointment {
   String reservedTime;
   bool emergency;
   bool docStatus;
-  Timestamp date_time;
+  num date_time;
   // String status;
   String patientName;
 

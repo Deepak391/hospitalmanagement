@@ -58,7 +58,10 @@ class AppointmentList extends GetView<AppointmentController> {
             },
             child: ListView(
               children: [
-                const Text("Appointment Lists : "),
+                const Text(
+                  "Appointment Lists : ",
+                  style: TextStyle(fontSize: 20),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -212,9 +215,10 @@ class AppointmentList extends GetView<AppointmentController> {
                                               Text(element.reservedTime)
                                             ],
                                           ),
-                                          Text(
-                                            "Status : ${element.docStatus == true ? "Sheduled" : "Awaiting"}",
-                                          )
+                                          // Text(
+                                          //   "Status : ${element.docStatus == true ? "Sheduled" : "Awaiting"}",
+                                          // )
+                                          Text("${element.reservedDate}")
                                         ],
                                       ),
                                     )

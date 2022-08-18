@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:myapp/admin%20section/Screens/AddPatient.dart';
 import 'package:myapp/admin%20section/Screens/AdminProfile.dart';
 import 'package:myapp/admin%20section/Screens/Home.dart';
@@ -8,9 +10,23 @@ import 'package:myapp/admin%20section/Screens/Store.dart';
 class AdminHomeController extends GetxController {
   var bottomNavBarIndex = 0.obs;
 
+  GetStorage getS = new GetStorage();
+
+  var user = {}.obs;
+
   onBottomNavBarChange(val) {
     bottomNavBarIndex.value = val;
     print(bottomNavBarIndex.value);
+  }
+
+  getUserInfo() async {
+    await FirebaseFirestore.instance
+        .collection('patients')
+        .doc(getS.read("userID"))
+        .get()
+        .then((value) => {print(value.data())});
+
+    print(user);
   }
 
   var ScreenArray = [
@@ -20,6 +36,7 @@ class AdminHomeController extends GetxController {
 
   @override
   void onInit() {
+    getUserInfo();
     super.onInit();
   }
 }

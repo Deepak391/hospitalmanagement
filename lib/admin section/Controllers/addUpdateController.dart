@@ -95,7 +95,8 @@ class AddUpdateController extends GetxController with StateMixin {
           "quantity": int.parse(qunatityController.text),
           "category": categoryContreller.text,
           "type": typeController.text,
-          "image": imageUrlController.text
+          "image": imageUrlController.text,
+          "directionToUse": ""
         }).then((value) {
           addedDocID = value.id;
 
