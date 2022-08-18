@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '/Paitent/Model/user_model.dart';
-import '../controller/user_controller.dart';
+import '../controller/userAppt_controller.dart';
 import '../widget/UserProfile_card.dart';
 
-final UserController controller = Get.put(UserController());
+final ApptController controller = Get.put(ApptController());
 
 class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({Key? key}) : super(key: key);
@@ -73,25 +73,25 @@ class UserProfileScreen extends StatelessWidget {
             ),
             SizedBox(height: 50),
             ProfileCard(
-                icon: 'assets/icons/User.svg',
+                icon: 'assets/icons/user.png',
                 title: 'Name: ',
                 text: cuser.name),
             ProfileCard(
-                icon: 'assets/icons/User.svg',
+                icon: 'assets/icons/email.png',
                 title: 'Email: ',
                 text: cuser.name),
             ProfileCard(
-                icon: 'assets/icons/User.svg',
+                icon: 'assets/icons/phone.png',
                 title: 'Phone: ',
                 text: cuser.phNum),
             ProfileCard(
-                icon: 'assets/icons/User.svg',
+                icon: 'assets/icons/id.png',
                 title: 'UserID: ',
                 text: cuser.userId),
             ProfileCard(
-                icon: 'assets/icons/User.svg', title: 'Sex: ', text: cuser.sex),
+                icon: 'assets/icons/sex.png', title: 'Sex: ', text: cuser.sex),
             ProfileCard(
-                icon: 'assets/icons/User.svg',
+                icon: 'assets/icons/age.png',
                 title: 'Age: ',
                 text: cuser.age.toString()),
             SizedBox(
@@ -104,7 +104,6 @@ class UserProfileScreen extends StatelessWidget {
               child: TextButton(
                 style: TextButton.styleFrom(
                   primary: Colors.black,
-                  padding: EdgeInsets.all(20),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                   backgroundColor: Colors.red[400],
@@ -113,7 +112,13 @@ class UserProfileScreen extends StatelessWidget {
                   print("Logout");
                 },
                 child: Row(
-                  children: [Icon(Icons.logout), Text("Logout")],
+                  children: [
+                    Icon(Icons.logout),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text("Logout")
+                  ],
                 ),
               ),
             )

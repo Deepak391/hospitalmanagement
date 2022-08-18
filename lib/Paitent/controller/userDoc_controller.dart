@@ -8,8 +8,7 @@ class UserController extends GetxController {
   RxInt currentBottomNavItemIndex = 0.obs;
   RxList<Doctor> allDoctors = <Doctor>[].obs;
   RxList<Doctor> filteredDoctors = <Doctor>[].obs;
-  static int currentUserIndex = 0;
-  User currentUser = User.Userlist[currentUserIndex];
+  
 
   @override
   void onInit() {

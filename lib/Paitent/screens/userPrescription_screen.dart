@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import '../Model/userAppt_model.dart';
 import '../Model/userprescription_model.dart';
+import '../controller/userPre_controller.dart';
+import 'package:get/get.dart';
+
+final PreController controller = Get.put(PreController());
 
 class userPrescription extends StatelessWidget {
   Appointment pdoc;
@@ -91,9 +95,9 @@ class userPrescription extends StatelessWidget {
                     height: 10,
                   ),
                   SizedBox(
-                    height: 450,
+                    height: 550,
                     child: ListView.builder(
-                      itemCount: Prescription.Prescriptionlist.length,
+                      itemCount: 10,
                       itemBuilder: (_, index) {
                         Prescription pre =
                             Prescription.Prescriptionlist.firstWhere(
@@ -159,7 +163,7 @@ class userPrescription extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          print("Request Prescription");
+                          controller.request("63IK1S1DZm3ggpA1Nj6c");
                         },
                         child: Container(
                           padding: EdgeInsets.all(10),

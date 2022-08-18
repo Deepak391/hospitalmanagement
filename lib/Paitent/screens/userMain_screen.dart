@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../controller/userAppt_controller.dart';
 import '../widget/userSearch_bar.dart';
 import '../widget/userdoctor_card.dart';
-import '../controller/user_controller.dart';
+import '../controller/userDoc_controller.dart';
 import '../Model/userdoctor_model.dart';
 
 

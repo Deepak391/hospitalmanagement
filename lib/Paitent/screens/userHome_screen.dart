@@ -4,13 +4,13 @@ import '../controller/userAppt_controller.dart';
 import 'userMediciensShop.dart';
 import 'userApptlist_screen.dart';
 import '../screens/userprofile_screen.dart';
-import '../controller/user_controller.dart';
+import '../controller/userDoc_controller.dart';
 import '../screens/userMain_screen.dart';
 
 final UserController controller = Get.put(UserController());
 
-
 class UserHomeScreen extends StatelessWidget {
+ 
   UserHomeScreen({Key? key}) : super(key: key);
 
   final List<Widget> screen = [

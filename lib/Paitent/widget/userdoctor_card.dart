@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/Paitent/Model/userdoctor_model.dart';
-import '../controller/user_controller.dart';
+import '../controller/userDoc_controller.dart';
 import '../screens/userDoctor_detail.dart';
 import '../Model/userdoctor_model.dart';
 

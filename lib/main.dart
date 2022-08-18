@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'common/onboarding_screen.dart';
 import './Paitent/screens/userHome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => UserHomeScreen(),
+        '/': (context) => onBoardingScreen(),
       },
     );
   }

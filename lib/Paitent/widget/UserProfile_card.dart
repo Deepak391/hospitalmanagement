@@ -24,7 +24,7 @@ class ProfileCard extends StatelessWidget {
             SizedBox(
               width: 15,
             ),
-            SvgPicture.asset(icon),
+            Image.asset(icon, height: 25, width: 25,),
             Text(
               "     ${title} ",
               style: TextStyle(fontSize: 16),

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:myapp/Paitent/Model/user_model.dart';
 import '../Model/userAppt_model.dart';
 import 'package:flutter/material.dart';
 import 'package:xid/xid.dart';
@@ -20,33 +21,70 @@ class ApptController extends GetxController {
   RxList<Appointment> allApptSchedules = <Appointment>[].obs;
   RxList<Appointment> nullsch = <Appointment>[].obs;
   RxList<Appointment> filteredApptSchedules = <Appointment>[].obs;
+  RxList<User> alluser = <User>[].obs;
+  User currentUser = User.Userlist[0];
+
+  static int currentUserIndex = 0;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     getappt();
+    //getuser();
   }
+
+  // void getuser() async {
+  //   isLoading.value = true;
+  //   var d = await FirebaseFirestore.instance
+  //       .collection("userPatient")
+  //       .get()
+  //       .then((value) => value.docs);
+  //   d.forEach((ele) {
+  //     alluser.add(User(
+  //         ele.data()['name'],
+  //         ele.data()['email'],
+  //         ele.data()['image'],
+  //         ele.data()['age'],
+  //         ele.data()['sex'],
+  //         ele.data()['userId'],
+  //         ele.data()['phNum']));
+  //   });
+  //   RxList<User> currentUser =
+  //       alluser.where((p0) => p0.userId == "P001").toList().obs;
+  //   print(currentUser[0]);
+  //   isLoading.value = false;
+  // }
 
   void getappt() async {
     isLoading.value = true;
     allApptSchedules([]);
 
     var d = await FirebaseFirestore.instance
-        .collection("userAppointment")
+        .collection("appointmentList")
         .get()
         .then((value) => value.docs);
     d.forEach((ele) {
       allApptSchedules.add(Appointment(
         ele.id,
         ele.data()['docName'],
+        ele.data()['docId'],
         ele.data()['docImage'],
         ele.data()['docSpecilization'],
+        ele.data()['patient_name'],
+        ele.data()['patient_age'],
+        ele.data()['patient_gender'],
+        ele.data()['gmeet'],
+        ele.data()['reshedule'],
+        ele.data()['Done'],
+        ele.data()['prescription'],
+        ele.data()['med'],
         ele.data()['reservedDate'],
         ele.data()['reservedTime'],
         ele.data()['emergency'],
         ele.data()['docStatus'],
         ele.data()['status'],
+        ele.data()['date_time'],
       ));
     });
     filteredApptSchedules =
@@ -72,14 +110,18 @@ class ApptController extends GetxController {
     String docImage,
     String Specilization,
   ) async {
+    int t = int.parse(timeslots[currentIndex.value].substring(0, 2));
+    final pastime = DateTime(lastDayOfMonth.year, lastDayOfMonth.month,
+        lastDayOfMonth.day + indexDaytime.value, t);
     final currentDate = lastDayOfMonth.add(Duration(days: indexDaytime.value));
-    
+
     await FirebaseFirestore.instance
-        .collection("userAppointment")
+        .collection("appointmentList")
         .doc(id)
         .update({
       "reservedDate": DateFormat('E, MMM d').format(currentDate),
-      "reservedTime": timeslots[currentIndex.value]
+      "reservedTime": timeslots[currentIndex.value],
+      "date_time": pastime,
     });
     getappt();
     DaytimeArr[indexDaytime.value][currentIndex.value]
@@ -90,7 +132,7 @@ class ApptController extends GetxController {
 
   void cancleBooking(String id) async {
     await FirebaseFirestore.instance
-        .collection("userAppointment")
+        .collection("appointmentList")
         .doc(id)
         .update({"status": "Cancel", "docStatus": false, "emergency": false});
     getappt();
@@ -146,11 +188,19 @@ class ApptController extends GetxController {
 
   void confirmBooking(
     String docName,
+    String docId,
     String docImage,
     String Specilization,
   ) async {
     var xid = Xid();
+    int t = int.parse(timeslots[currentIndex.value].substring(0, 2));
+
+    final pastime = DateTime(lastDayOfMonth.year, lastDayOfMonth.month,
+        lastDayOfMonth.day + indexDaytime.value, t);
+
     final currentDate = lastDayOfMonth.add(Duration(days: indexDaytime.value));
+    final docuser =
+        FirebaseFirestore.instance.collection('appointmentList').doc();
 
     if (regularIsSelected == true) {
       for (int i = 0; i < 2; i++) {
@@ -158,16 +208,29 @@ class ApptController extends GetxController {
             lastDayOfMonth.add(Duration(days: indexDaytime.value + i));
         DaytimeArr[indexDaytime.value + i][currentIndex.value]
             .update('status', (value) => 'filled');
-        await FirebaseFirestore.instance.collection("userAppointment").add({
-          //'id': Xid().toString(),
+        await FirebaseFirestore.instance
+            .collection("appointmentList")
+            .doc(docuser.id)
+            .set({
+          'id': docuser.id,
           'docName': docName,
           'docImage': docImage,
           'docSpecilization': Specilization,
+          'patient_name': currentUser.name,
+          'patient_age': currentUser.age,
+          'patient_gender': currentUser.sex,
           'reservedDate': DateFormat('E, MMM d').format(currentDate),
           'reservedTime': timeslots[currentIndex.value],
           'emergency': emergencyIsSelected.value,
           'docStatus': emergencyIsSelected.value,
-          'status': "Upcoming"
+          'status': "Upcoming",
+          'gmeet': "",
+          'reshedule': false,
+          'Done': false,
+          'prescription': "",
+          'med': [],
+          'docId': docId,
+          'date_time': pastime,
         });
       }
       Get.snackbar(
@@ -175,16 +238,29 @@ class ApptController extends GetxController {
     } else {
       DaytimeArr[indexDaytime.value][currentIndex.value]
           .update('status', (value) => 'filled');
-      await FirebaseFirestore.instance.collection("userAppointment").add({
-        //'id': Xid().toString(),
+      await FirebaseFirestore.instance
+          .collection("appointmentList")
+          .doc(docuser.id)
+          .set({
+        'id': docuser.id,
         'docName': docName,
         'docImage': docImage,
         'docSpecilization': Specilization,
+        'patient_name': currentUser.name,
+        'patient_age': currentUser.age,
+        'patient_gender': currentUser.sex,
         'reservedDate': DateFormat('E, MMM d').format(currentDate),
         'reservedTime': timeslots[currentIndex.value],
         'emergency': emergencyIsSelected.value,
         'docStatus': emergencyIsSelected.value,
-        'status': "Upcoming"
+        'status': "Upcoming",
+        'gmeet': "",
+        'reshedule': false,
+        'Done': false,
+        'prescription': "",
+        'med': [],
+        'docId': docId,
+        'date_time': pastime,
       });
       Get.snackbar("Booking Status", "You have Succesfully Booked a Slot");
     }

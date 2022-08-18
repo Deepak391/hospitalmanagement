@@ -263,6 +263,7 @@ class ApptBooking extends StatelessWidget {
                     onTap: () {
                       controller.confirmBooking(
                         doc.name,
+                        doc.docId,
                         doc.image,
                         doc.specialization,
                       );
