@@ -99,9 +99,7 @@ class userPrescription extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: 10,
                       itemBuilder: (_, index) {
-                        Prescription pre =
-                            Prescription.Prescriptionlist.firstWhere(
-                                (element) => element.id == 'P001');
+                        Prescription pre = controller.allpre[0];
 
                         return Padding(
                           padding: EdgeInsets.all(5),

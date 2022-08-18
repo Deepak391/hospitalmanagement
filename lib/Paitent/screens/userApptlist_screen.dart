@@ -147,7 +147,7 @@ class UserAppList extends StatelessWidget {
                                           ],
                                         ),
                                         SizedBox(
-                                          width: 180,
+                                          width: 150,
                                         ),
                                         schedule.docStatus
                                             ? Row(
