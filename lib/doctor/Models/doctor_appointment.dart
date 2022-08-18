@@ -4,24 +4,24 @@ import 'package:hospital_management_system/doctor/Models/medicine.dart';
 import 'package:intl/intl.dart';
 
 class Appointment {
-  final String docImage;
-  final String docName;
-  final String docSpecilization;
+   String docImage;
+   String docName;
+   String docSpecilization;
   bool docStatus;
-  final String id;
-  final String reservedDate;
-  final String reservedTime;
-  final String patient_name;
-  final int patient_age;
-  final String patient_gender;
-  final DateTime date_time;
-  final String gmeet;
+   String id;
+   String reservedDate;
+   String reservedTime;
+   String patient_name;
+   String patient_age;
+   String patient_gender;
+   DateTime date_time;
+   String gmeet;
   bool reshedule;
-  final bool emergency;
+   bool emergency;
   bool Done;
-  final String status;
-  final String prescription;
-  final List med;
+   String status;
+   String prescription;
+   List med;
   Appointment({
     this.gmeet="",
     this.status = "",
@@ -33,12 +33,12 @@ class Appointment {
     this.docStatus = false,
     this.id = "",
     this.patient_name = "",
-    this.patient_age = 0,
+    this.patient_age = "",
     this.patient_gender = "",
     DateTime? date_time,
     this.emergency = false,
     this.reshedule = false,
-    this.Done = false,
+    required this.Done,
     this.prescription = "",
     List? med,
   })  : med = med ?? [],
@@ -48,7 +48,7 @@ class Appointment {
     Appointment(
       id: 'A002',
       patient_name: 'rohan Arora',
-      patient_age: 18,
+      patient_age: '18',
       patient_gender: 'Male',
       date_time: DateTime(2022, 8, 16, 10, 00),
       emergency: false,
@@ -69,7 +69,7 @@ class Appointment {
     Appointment(
       id: 'ap2',
       patient_name: 'Asifkhan Arora',
-      patient_age: 19,
+      patient_age: '19',
       patient_gender: 'FeMale',
       date_time: DateTime(2022, 08, 16, 11, 00),
       emergency: false,
@@ -90,7 +90,7 @@ class Appointment {
     Appointment(
       id: 'A001',
       patient_name: 'Asifkhan Arora',
-      patient_age: 20,
+      patient_age: '20',
       patient_gender: 'Male',
       date_time: DateTime(2022, 08, 16, 12, 00),
       emergency: false,
@@ -111,7 +111,7 @@ class Appointment {
     Appointment(
       id: 'ap4',
       patient_name: 'rohan Arora',
-      patient_age: 21,
+      patient_age: '21',
       patient_gender: 'Male',
       date_time: DateTime(2022, 08, 16, 13, 00),
       emergency: false,

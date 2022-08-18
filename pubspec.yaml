@@ -41,7 +41,6 @@ dependencies:
   firebase_auth: ^3.6.2
   firebase_storage: ^10.3.4
   cloud_firestore: ^3.4.1
-  flutter_document_picker: ^4.0.0
   syncfusion_flutter_pdfviewer: ^20.2.44-beta
   http: ^0.13.5
 dev_dependencies:

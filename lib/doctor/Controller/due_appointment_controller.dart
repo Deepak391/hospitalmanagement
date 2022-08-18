@@ -18,7 +18,7 @@ class DueAppointmentController extends GetxController {
   final _getallmedicine = [].obs;
   List<Medicine> finalmed = [];
   RxList getallappointment = [].obs;
-  Appointment temp = new Appointment();
+  Appointment temp = new Appointment(Done: false);
 
   @override
   void onInit() {
@@ -181,10 +181,11 @@ class DueAppointmentController extends GetxController {
 
 //its use for currenttimeappointment
   Appointment checkcurrentappointment() {
-    temp = new Appointment();
+    temp = new Appointment(Done: false);
     DateTime a = DateTime.now();
     for (int i = 0; i < getallappointment.length; i++) {
       print(getallappointment[i].date_time);
+      print(getallappointment[i].Done);
       if (samedatetime(a, getallappointment[i].date_time)) {
         return getallappointment[i];
       }
@@ -193,20 +194,17 @@ class DueAppointmentController extends GetxController {
   }
 
   void acceptgmeet(Appointment appoint, String text) async {
-    if (!appoint.docStatus) {
-      appoint.docStatus = true;
-      await FirebaseFirestore.instance
-          .collection('appointmentList')
-          .doc(appoint.id)
-          .update({'gmeet': text});
-      Get.snackbar(
-        "Meeting Link send",
-        "",
-        snackPosition: SnackPosition.TOP,
-        duration: const Duration(milliseconds: 1200),
-        backgroundColor: Colors.white70,
-      );
-    }
+    await FirebaseFirestore.instance
+        .collection('appointmentList')
+        .doc(appoint.id)
+        .update({'gmeet': text});
+    Get.snackbar(
+      "Meeting Link send",
+      "",
+      snackPosition: SnackPosition.TOP,
+      duration: const Duration(milliseconds: 1200),
+      backgroundColor: Colors.white70,
+    );
   }
 
 //helper function for checkcurrentappointment
@@ -222,12 +220,11 @@ class DueAppointmentController extends GetxController {
     }
   }
 
-  void makeappointmentdone(Appointment appoint) async{
+  void makeappointmentdone(Appointment appoint) async {
     await FirebaseFirestore.instance
-          .collection('appointmentList')
-          .doc(appoint.id)
-          .update({'Done': true});
-          
+        .collection('appointmentList')
+        .doc(appoint.id)
+        .update({'Done': true});
   }
 
   void listofappointmentsucess() async {
@@ -282,9 +279,9 @@ class DueAppointmentController extends GetxController {
     print(temp);
   }
 
-  List<Medicine> helpofpdf(List<Medicine>med) {
+  List<Medicine> helpofpdf(List<Medicine> med) {
     List<Medicine> result = [];
-    for (int i = 0; i <med.length; i++) {
+    for (int i = 0; i < med.length; i++) {
       result.add(med[i]);
     }
     return result;

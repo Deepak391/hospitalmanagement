@@ -163,7 +163,7 @@ class CurrentAppointmentCard extends StatelessWidget {
                     children: [
                       TextButton.icon(
                         onPressed: () => Get.to(() => TakeAppointmentScreen(
-                              appoint: controller.currentappoint,
+                              appoint: appoint,
                             )),
                         icon: const Icon(
                           Icons.start_rounded,

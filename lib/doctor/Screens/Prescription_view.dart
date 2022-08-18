@@ -41,6 +41,7 @@ class PrescriptionView extends StatelessWidget {
                   final pdfFile = await PdfParagraphApi.generate(
                       controller.helpofpdf(controller.finalmed),appoint.patient_name,appoint.patient_name,appoint.patient_age.toString(),appoint.date_time.toString());
                   file = pdfFile;
+                   uploadFile(appoint.id);
                 controller.finalsubmit(appoint);
                 controller.makeappointmentdone(appoint);
                 Get.offAll(() => DoctorHome());

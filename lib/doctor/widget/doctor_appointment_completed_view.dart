@@ -151,8 +151,13 @@ class AppointmentCompletedCard extends StatelessWidget {
                 ElevatedButton(
                   child: const Text('View Prescription'),
                   onPressed: () async {
-                    // PdfApi.downloadFile(
-                    //     controller.appointmentcompleted[index].id);
+                    try {
+                      PdfApi a = new PdfApi();
+                      a.downloadFile(controller.appointmentcompleted[index].id);
+                    } on Exception catch (e) {
+                      // TODO
+                      print(e);
+                    }
                   },
                 ),
                 const SizedBox(width: 40),

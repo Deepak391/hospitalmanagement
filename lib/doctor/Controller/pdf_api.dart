@@ -3,7 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart';
-import 'package:flutter/services.dart';
+
 import 'dart:async';
 import 'package:http/http.dart' as http;
 
@@ -58,7 +58,7 @@ class PdfApi {
 
   Future<void> downloadFile(String path) async {
   FirebaseStorage storage = FirebaseStorage.instance;
-  Reference ref = storage.ref().child("prescription/" + path+".pdf");  
+  Reference ref = storage.ref().child("prescription/" + path);  
 
 
   final Directory appDocDir = await getApplicationDocumentsDirectory();
@@ -71,6 +71,7 @@ class PdfApi {
   } on FirebaseException{
     print("error");
   };
+  }
     // ScaffoldMessenger.of(context).showSnackBar(
     //   SnackBar(
     //     content: Text(
@@ -92,4 +93,3 @@ class PdfApi {
   //             borderRadius: BorderRadius.circular(30.0))),
 }
 
-}
