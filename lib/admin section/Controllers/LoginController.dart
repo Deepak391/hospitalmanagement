@@ -85,6 +85,7 @@ class LoginController extends GetxController with StateMixin {
             .doc(user.uid)
             .get()
             .then((value) {
+          print(value.data());
           getStorage.write("image", value.data()!["image"]);
           getStorage.write("phoneNumber", value.data()!["phoneNumber"]);
           getStorage.write("email", value.data()!["email"]);
