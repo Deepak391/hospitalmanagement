@@ -15,7 +15,7 @@ class PdfParagraphApi {
   //   required this.appoint,
   // });
   // final List<Medicine>medicine=DueAppointmentController.helpofpdf(appoint);
-  static Future<File> generate(List<Medicine> med) async {
+  static Future<File> generate(List<Medicine> med,String Docname,String pname,String page,String time) async {
     final pdf = Document();
     final medicine = med;
     final customFont =
@@ -24,7 +24,7 @@ class PdfParagraphApi {
     pdf.addPage(
       MultiPage(
         build: (context) => <Widget>[
-          buildCustomHeader(),
+          buildCustomHeader(Docname,pname,page,time),
           SizedBox(height: 0.5 * PdfPageFormat.cm),
           ListView.builder(
               itemCount: medicine.length,
@@ -43,7 +43,7 @@ class PdfParagraphApi {
                     Column(
                        mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                         Row(children: [Paragraph(text: 'Use - ${medicine[index].desc}'),]
+                         Row(children: [Paragraph(text: 'Use - '),]
                         ),
                         
                       ],
@@ -70,7 +70,7 @@ class PdfParagraphApi {
     return PdfApi.saveDocument(name: 'my_example.pdf', pdf: pdf);
   }
 
-  static Widget buildCustomHeader() => Container(
+  static Widget buildCustomHeader(String Docname,String pname,String page,String time) => Container(
       padding: EdgeInsets.only(bottom: 3 * PdfPageFormat.mm),
       decoration: BoxDecoration(
         border: Border(bottom: BorderSide(width: 2, color: PdfColors.blue)),
@@ -88,20 +88,20 @@ class PdfParagraphApi {
             ],
           ),
           SizedBox(height: 10),
-          Row(children: [Text('Doctor Name : '), Text('Asif khan')]),
+          Row(children: [Text('Doctor Name : '), Text(Docname)]),
           SizedBox(height: 10),
           Row(children: [
             Text('Patient Name : '),
-            Text('Patinet1'),
+            Text(pname),
             SizedBox(width: 25),
             Text('Patient Age : '),
-            Text('25'),
+            Text(page),
             SizedBox(width: 25),
             Text('Patient Sex : '),
             Text('Male')
           ]),
           SizedBox(height: 10),
-          Row(children: [Text('Date : '), Text('15/08/2022')])
+          Row(children: [Text('Date : '), Text(time)])
         ],
       ));
 

@@ -33,7 +33,7 @@ class UpcomingAppointmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 160,
+        height: 110,
         child: Card(
           elevation: 10,
           child: Container(

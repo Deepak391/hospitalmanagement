@@ -1,5 +1,7 @@
 class Medicine {
-  final  String name;
-  final  String desc;
-  Medicine({this.name="", this.desc=""});
+  final String id;
+  final String name;
+  final int quantity;
+  final String useof;
+  Medicine({this.name = "", this.id = "", this.quantity = 0,this.useof=""});
 }

@@ -6,8 +6,11 @@ import 'package:hospital_management_system/doctor/Screens/doctor_upcoming_appoin
 import 'package:hospital_management_system/doctor/widget/doctor_appointment_completed_view.dart';
 import 'package:hospital_management_system/doctor/widget/doctor_current_appointment.dart';
 
+import '../Controller/due_appointment_controller.dart';
+
 class AppointmentCompletedScreen extends StatelessWidget {
-  const AppointmentCompletedScreen({super.key});
+   final DueAppointmentController controller = Get.find();
+   AppointmentCompletedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,52 +26,72 @@ class AppointmentCompletedScreen extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 // color: Colors.black26,
-                height: 45,
+                height: 65,
                 child: Row(
 
                     // mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      IconButton(
-                        iconSize: 30.0,
-                        padding: const EdgeInsets.only(left: 20.0),
-                        // ignore: prefer_const_constructors
-                        icon: Icon(
-                          Icons.task,
-                        ),
-                        onPressed: () => Get.offAll(() =>  DoctorHome()),
-                      ),
-                      IconButton(
-                        iconSize: 30.0,
-                        padding: const EdgeInsets.only(left: 20.0),
-                        icon: const Icon(Icons.assessment),
-                        onPressed: () => Get.offAll(() => const DueMainScreen()),
-                      ),
-                      IconButton(
-                        iconSize: 30.0,
-                        padding: const EdgeInsets.only(right: 5.0),
-                        icon: const Icon(
-                          Icons.event_available,
-                        ),
-                        onPressed: () =>
-                            Get.offAll(() => const UpcomingAppointmentScreen()),
-                      ),
-                      IconButton(
-                          iconSize: 30.0,
-                          padding: const EdgeInsets.only(right: 10.0),
-                          icon: const Icon(
-                            Icons.done_outline,
+                      Column(
+                        children: [
+                          IconButton(
+                            iconSize: 30.0,
+                            padding: const EdgeInsets.only(left: 10.0),
+                            // ignore: prefer_const_constructors
+                            icon: Icon(
+                              Icons.task,
+                            ),
+                            onPressed: () => Get.off(() =>  DoctorHome()),
                           ),
-                          onPressed: () =>
-                            Get.offAll(() => const AppointmentCompletedScreen())),
-                      IconButton(
-                          iconSize: 30.0,
-                          padding: const EdgeInsets.only(right: 15.0),
-                          icon: const Icon(
-                            Icons.add_shopping_cart,
+                        const Padding( padding: const EdgeInsets.only(left: 10.0),
+                            child: Text("DashBoard",style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold ),)),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          IconButton(
+                            iconSize: 30.0,
+                            padding: const EdgeInsets.only(left: 5.0),
+                            icon: const Icon(Icons.assessment),
+                            onPressed: () => Get.off(() =>  DueMainScreen()),
                           ),
-                          onPressed: () =>
-                            Get.offAll(() =>  CurrentAppointmentCard()),),
+                          const Padding( padding: const EdgeInsets.only(left: 2.5),
+                            child: Text("Due Appointmnet",style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold ),)),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          IconButton(
+                            iconSize: 30.0,
+                            padding: const EdgeInsets.only(right: 3.0),
+                            icon: const Icon(
+                              Icons.event_available,
+                            ),
+                            onPressed: () =>
+                                Get.off(() =>  UpcomingAppointmentScreen()),
+                          ),
+                          const Padding( padding: const EdgeInsets.only(left: 0.0),
+                            child: Text("Upcoming",style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold ),)),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          IconButton(
+                              iconSize: 30.0,
+                              padding: const EdgeInsets.only(right: 5.0),
+                              icon: const Icon(
+                                Icons.done_outline,
+                              ),
+                               onPressed: () {
+                                controller.listofappointmentsucess();
+                              Get.off(
+                                () =>  AppointmentCompletedScreen());
+                          }),
+                                const Padding( padding: const EdgeInsets.only(right: 5.0),
+                            child: Text("Done",style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold ),)),
+                        ],
+                      ),
+                      
                     ],),))
     );
   }

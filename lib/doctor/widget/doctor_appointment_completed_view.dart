@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hospital_management_system/doctor/Controller/due_appointment_controller.dart';
+import 'package:hospital_management_system/doctor/Controller/pdf_api.dart';
+import 'package:hospital_management_system/doctor/Controller/pdf_paragraph_api.dart';
 import 'package:intl/intl.dart';
 
 class AppointmentCompleted extends StatelessWidget {
@@ -26,7 +28,8 @@ class AppointmentCompleted extends StatelessWidget {
 class AppointmentCompletedCard extends StatelessWidget {
   final int index;
   final DueAppointmentController controller;
-  const AppointmentCompletedCard({required this.index,required this.controller,super.key});
+  const AppointmentCompletedCard(
+      {required this.index, required this.controller, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +74,8 @@ class AppointmentCompletedCard extends StatelessWidget {
                             fontSize: 15),
                       ),
                       Text(
-                        controller.appointmentcompleted[index].patient_age.toString(),
+                        controller.appointmentcompleted[index].patient_age
+                            .toString(),
                         textAlign: TextAlign.end,
                         style: const TextStyle(
                           color: Colors.black,
@@ -108,7 +112,8 @@ class AppointmentCompletedCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             fontSize: 15),
                       ),
-                      Text('${DateFormat.MMMEd().format(controller.appointmentcompleted[index].date_time)} ${DateFormat.jm().format(controller.appointmentcompleted[index].date_time)}',
+                      Text(
+                        '${DateFormat.MMMEd().format(controller.appointmentcompleted[index].date_time)} ${DateFormat.jm().format(controller.appointmentcompleted[index].date_time)}',
                         textAlign: TextAlign.end,
                         style: const TextStyle(
                           color: Colors.black,
@@ -127,7 +132,8 @@ class AppointmentCompletedCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             fontSize: 15),
                       ),
-                      const Text('Done',
+                      const Text(
+                        'Done',
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           color: Colors.black,
@@ -143,9 +149,12 @@ class AppointmentCompletedCard extends StatelessWidget {
               children: <Widget>[
                 const SizedBox(width: 100),
                 ElevatedButton(
-                        child: const Text('View Prescription'),
-                        onPressed: () =>{},
-                      ),
+                  child: const Text('View Prescription'),
+                  onPressed: () async {
+                    // PdfApi.downloadFile(
+                    //     controller.appointmentcompleted[index].id);
+                  },
+                ),
                 const SizedBox(width: 40),
               ],
             )),

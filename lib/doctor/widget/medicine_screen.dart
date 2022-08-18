@@ -5,13 +5,14 @@ import 'package:hospital_management_system/doctor/Models/doctor_appointment.dart
 import 'package:hospital_management_system/doctor/Models/medicine_list.dart';
 
 class MedicineScreen extends StatelessWidget {
+  final DueAppointmentController controller = Get.find(); 
   final Appointment appoint;
-  const MedicineScreen({required this.appoint, super.key});
+   MedicineScreen({required this.appoint, super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: MedicineStock.medicinelist.length,
+        itemCount: controller.allmedicine.length,
         itemBuilder: (BuildContext ctx, index) {
           return MedicineScreenCard(
             index: index,
@@ -27,11 +28,12 @@ class MedicineScreenCard extends StatelessWidget {
   final DueAppointmentController controller = Get.find();
   MedicineScreenCard({required this.index, required this.appoint, super.key});
   TextEditingController temptext = TextEditingController();
+  TextEditingController quan = TextEditingController();
   // String as;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 200,
+        height: 250,
         child: Card(
             elevation: 10,
             child: Container(
@@ -50,7 +52,7 @@ class MedicineScreenCard extends StatelessWidget {
                                 fontSize: 15),
                           ),
                           Text(
-                            MedicineStock.medicinelist[index].name,
+                            controller.allmedicine[index].name,
                             textAlign: TextAlign.end,
                             style: const TextStyle(
                               color: Colors.black,
@@ -69,7 +71,7 @@ class MedicineScreenCard extends StatelessWidget {
                                 fontSize: 15),
                           ),
                           Text(
-                            MedicineStock.medicinelist[index].Quantity
+                            controller.allmedicine[index].quantity
                                 .toString(),
                             textAlign: TextAlign.end,
                             style: const TextStyle(
@@ -80,18 +82,22 @@ class MedicineScreenCard extends StatelessWidget {
                       ),
                       TextFormField(
                         decoration:
+                            const InputDecoration(hintText: "Enter Quantity"),
+                        controller: quan,
+                      ),
+                      SizedBox(height:10),
+
+                      TextFormField(
+                        decoration:
                             const InputDecoration(hintText: "Direction to use"),
                         controller: temptext,
                       ),
                       RaisedButton(
                         child: const Text("Add in Prescription"),
                         onPressed: () {
-                          // if (temptext.isNull) {
-                          //   temptext = "No Suggestion" as TextEditingController;
-                          // }
+                          int s = int.parse(quan.text);
                           controller.addmedicine(
-                              appoint,
-                              MedicineStock.medicinelist[index].name,
+                              controller.allmedicine[index],s,
                               temptext.text);
                         },
                       ),
