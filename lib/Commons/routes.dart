@@ -1,4 +1,5 @@
 import 'package:get/route_manager.dart';
+import 'package:myapp/Paitent/screens/userHome_screen.dart';
 import 'package:myapp/admin%20section/Bindings/AddOrUpdateMedicineBinding.dart';
 import 'package:myapp/admin%20section/Bindings/AddPatient.dart';
 import 'package:myapp/admin%20section/Bindings/AdminHomeBinding.dart';
@@ -22,6 +23,8 @@ import 'package:myapp/admin%20section/Screens/MedicineRequestScreen.dart';
 import 'package:myapp/admin%20section/Screens/RestockMedicine.dart';
 import 'package:myapp/admin%20section/Screens/Singup.dart';
 import 'package:myapp/admin%20section/Screens/Store.dart';
+import 'package:myapp/Commons/onboarding_screen.dart';
+import 'package:myapp/doctor/Screens/doctor_home.dart';
 
 var Routes = [
   GetPage(
@@ -73,5 +76,18 @@ var Routes = [
     name: AppointmentList.routeName,
     page: () => AppointmentList(),
     binding: AppointmentBinding(),
+  ),
+  GetPage(
+    name: onBoardingScreen.routeName,
+    page: () => onBoardingScreen(),
+    // binding: AppointmentBinding(),
+  ),
+  GetPage(
+    name: UserHomeScreen.routeName,
+    page: () => UserHomeScreen(),
+  ),
+  GetPage(
+    name: DoctorHome.routeName,
+    page: () => DoctorHome(),
   ),
 ];

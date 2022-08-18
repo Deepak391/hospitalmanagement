@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myapp/Paitent/screens/userHome_screen.dart';
+import 'package:myapp/admin%20section/Screens/AdminHomeScreen.dart';
+import 'package:myapp/doctor/Screens/doctor_home.dart';
 
 class SignUpController extends GetxController {
   final GlobalKey<FormState> signUpKey = GlobalKey<FormState>();
@@ -149,6 +152,8 @@ class SignUpController extends GetxController {
           .doc(uid)
           .set({"role": dropdownValue.value});
 
+      print(dropdownValue.value);
+
       if (dropdownValue.value == "Admin") {
         print(uid);
         await FirebaseFirestore.instance.collection("admins").doc(uid).set(
@@ -158,9 +163,14 @@ class SignUpController extends GetxController {
             "phoneNumber": phoneNumber,
             "image": imgurl
           },
-        );
+        ).then((value) {
+          print("Admin");
+          getStorage.write("role", "Admin");
+          Get.toNamed("/");
+        });
       } else if (dropdownValue.value == "Doctor") {
-        await FirebaseFirestore.instance.collection("admins").doc(uid).set(
+        print("Doctor Signup");
+        await FirebaseFirestore.instance.collection("doctor").doc(uid).set(
           {
             "email": email,
             "fullName": username,
@@ -172,7 +182,11 @@ class SignUpController extends GetxController {
             "description": "",
             "appointment List": []
           },
-        );
+        ).then((value) {
+          print("Doctor");
+          getStorage.write("role", "Doctor");
+          Get.toNamed(DoctorHome.routeName);
+        });
       } else {
         await FirebaseFirestore.instance.collection("patients").doc(uid).set(
           {
@@ -183,7 +197,11 @@ class SignUpController extends GetxController {
             "age": 0,
             "sex": ""
           },
-        );
+        ).then((value) {
+          print("Patient");
+          getStorage.write("role", "Patient");
+          Get.toNamed(UserHomeScreen.routeName);
+        });
       }
 
       Get.snackbar(
@@ -192,7 +210,6 @@ class SignUpController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
       await Future.delayed(Duration(microseconds: 1000));
-      Get.toNamed("/intro");
     } catch (e) {
       loading(false);
       print(e);

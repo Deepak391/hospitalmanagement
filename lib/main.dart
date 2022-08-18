@@ -16,6 +16,7 @@ import 'package:myapp/admin%20section/Screens/MedicineRequestScreen.dart';
 import 'package:myapp/admin%20section/Screens/Singup.dart';
 import 'package:myapp/admin%20section/Screens/Store.dart';
 import 'package:myapp/doctor/Screens/doctor_home.dart';
+import 'package:myapp/Commons/onboarding_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
               : (getSt.read("role") == "Doctor"
                   ? UserHomeScreen.routeName
                   : DoctorHome.routeName)
-          : LoginScreen.routeName,
+          : onBoardingScreen.routeName,
       initialBinding: FirebaseAuth.instance.currentUser != null
           ? getSt.read("role") == "Admin"
               ? AdminHomeBinding()

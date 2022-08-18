@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../Controller/appointment_controller.dart';
 import '../Firebase/add_appointments.dart';
 import '../Models/doctor_appointment.dart';
@@ -13,6 +15,7 @@ import 'doctor_due_appointment_main.dart';
 
 class DoctorHome extends StatelessWidget {
   static const routeName = "/doctorHome";
+  GetStorage getStorage = GetStorage();
   final DueAppointmentController dueappointmentController =
       Get.put(DueAppointmentController());
   final AddAppointment temp = new AddAppointment();
@@ -38,10 +41,19 @@ class DoctorHome extends StatelessWidget {
             help(),
             // CurrentAppointment(),
             // help(),
-            // ElevatedButton(
-            //     child: const Text("Add Appointment"),
-            //     onPressed: () =>
-            //         dueappointmentController.notacceptappointmentlist()),
+            ElevatedButton(
+                child: const Text("Add Appointment"),
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                  getStorage.remove("userID");
+                  getStorage.remove("username");
+                  getStorage.remove("email");
+                  getStorage.remove("phoneNumber");
+                  getStorage.remove("address");
+                  getStorage.remove("intro");
+                  // getStorage.erase();
+                  Get.toNamed("/login");
+                }),
             ElevatedButton(
                 child: const Text("Add Appointment"),
                 onPressed: () async =>
