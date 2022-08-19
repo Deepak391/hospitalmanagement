@@ -15,13 +15,15 @@ class MRDController extends GetxController with StateMixin<dynamic> {
     medReq([]);
 
     List<QueryDocumentSnapshot> d = await FirebaseFirestore.instance
-        .collection("MedicineRequest")
+        .collection("prescription")
         .get()
         .then((value) => value.docs);
 
     for (int i = 0; i < d.length; i++) {
       // medReq.add(d[i].data());
       var p = d[i].data() as Map;
+
+      print(p);
 
       var id = d[i].id;
 
@@ -42,14 +44,14 @@ class MRDController extends GetxController with StateMixin<dynamic> {
         tP = tP + (p1 * p2);
         med.add(m);
       }
-      print(q);
+      print(p["patientId"]);
       var patient = await FirebaseFirestore.instance
           .collection("patients")
-          .doc(p["patientID"])
+          .doc(p["patientId"])
           .get();
 
       // print(med);
-      // print(patient.data());
+      print(patient.data());
 
       // var med = [];
       // for (int j = 0; j < d[i].data()!["medicines"].lenght;) {}
@@ -62,6 +64,8 @@ class MRDController extends GetxController with StateMixin<dynamic> {
         "quantityArr": q,
         "Total Price": tP
       });
+
+      print(medReq);
     }
 
     print(medReq);
@@ -69,6 +73,7 @@ class MRDController extends GetxController with StateMixin<dynamic> {
   }
 
   acceptMedReq(List<dynamic> med, String medReqId, List<dynamic> q) async {
+    isLoading(true);
     for (int i = 0; i < med.length; i++) {
       var m = medicines.firstWhere((element) => element.id == med[i].id);
       var restock = false;
@@ -92,13 +97,16 @@ class MRDController extends GetxController with StateMixin<dynamic> {
     }
 
     await FirebaseFirestore.instance
-        .collection("MedicineRequest")
+        .collection("prescription")
         .doc(medReqId)
         .update({"status": "done"}).then((value) {
       print("Med Req successfully accepted.");
 
       medReq.removeWhere((element) => element["id"] == medReqId);
     });
+
+    isLoading(false);
+    update();
   }
 
   getMedInfo(String id) async {

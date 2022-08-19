@@ -4,7 +4,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:myapp/admin%20section/Screens/AddPatient.dart';
 import 'package:myapp/admin%20section/Screens/AdminProfile.dart';
 import 'package:myapp/admin%20section/Screens/Home.dart';
-import 'package:myapp/admin%20section/Screens/MedicineRequest.dart';
 import 'package:myapp/admin%20section/Screens/Store.dart';
 
 class AdminHomeController extends GetxController {

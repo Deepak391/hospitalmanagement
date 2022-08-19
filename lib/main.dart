@@ -31,14 +31,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(getSt.read("userID"));
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: FirebaseAuth.instance.currentUser != null
           ? getSt.read("role") == "Admin"
               ? AdminHomeScreen.routeName
               : (getSt.read("role") == "Doctor"
-                  ? UserHomeScreen.routeName
-                  : DoctorHome.routeName)
+                  ? DoctorHome.routeName
+                  : UserHomeScreen.routeName)
           : onBoardingScreen.routeName,
       initialBinding: FirebaseAuth.instance.currentUser != null
           ? getSt.read("role") == "Admin"

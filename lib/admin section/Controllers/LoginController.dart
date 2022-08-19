@@ -78,6 +78,7 @@ class LoginController extends GetxController with StateMixin {
 
       getStorage.write("userID", user.uid);
       getStorage.write("role", d.data()!["role"]);
+
       print(getStorage.read("userID"));
       if (d.data()!["role"] == "Admin") {
         print("Admin");
@@ -94,13 +95,13 @@ class LoginController extends GetxController with StateMixin {
           getStorage.write("username", value.data()!["username"]);
         });
 
-        Get.toNamed(AdminHomeScreen.routeName);
+        Get.offAllNamed(AdminHomeScreen.routeName);
       } else if (d.data()!["role"] == "Doctor") {
         print("Doctor");
-        Get.toNamed(DoctorHome.routeName);
+        Get.offAllNamed(DoctorHome.routeName);
       } else {
         print("Patient");
-        Get.toNamed(UserHomeScreen.routeName);
+        Get.offAllNamed(UserHomeScreen.routeName);
       }
 
       await Future.delayed(

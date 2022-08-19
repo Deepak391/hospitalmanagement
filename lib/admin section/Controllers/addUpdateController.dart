@@ -6,6 +6,7 @@ import 'package:myapp/models/medicine.dart';
 
 class AddUpdateController extends GetxController with StateMixin {
   var sc = Get.find<StoreController>();
+  var isLoading = false.obs;
 
   late TextEditingController nameController;
   late TextEditingController priceController;
@@ -84,6 +85,8 @@ class AddUpdateController extends GetxController with StateMixin {
       return;
     }
 
+    isLoading(true);
+
     if (pageState.value == "add") {
       var addedDocID;
       try {
@@ -113,10 +116,11 @@ class AddUpdateController extends GetxController with StateMixin {
             ),
           );
         });
-
+        isLoading(false);
         Get.snackbar("Medicine Added", "Medicine Added Successflully.");
         Get.back();
       } catch (e) {
+        isLoading(false);
         print(e);
         Get.snackbar("Something went wrong", "Error adding Medicine.");
       }
@@ -135,10 +139,12 @@ class AddUpdateController extends GetxController with StateMixin {
           "type": typeController.text,
           "image": imageUrlController.text
         }).then((value) {
+          isLoading(false);
           Get.snackbar("Medicine Added", "Medicine Updated Successflully.");
           Get.back();
         });
       } catch (e) {
+        isLoading(false);
         Get.snackbar("Something went wrong", "Error adding Medicine.");
       }
     }

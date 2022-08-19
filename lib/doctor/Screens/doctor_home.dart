@@ -45,6 +45,7 @@ class DoctorHome extends StatelessWidget {
                 child: const Text("Add Appointment"),
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
+                  getStorage.remove("role");
                   getStorage.remove("userID");
                   getStorage.remove("username");
                   getStorage.remove("email");

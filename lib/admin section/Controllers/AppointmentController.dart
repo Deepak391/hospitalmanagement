@@ -31,6 +31,21 @@ class AppointmentController extends GetxController with StateMixin {
   resheduleApp(String id) async {
     Get.back();
 
+    var d = DateTime.now();
+    var d1 = days.indexWhere((element) => element == selectedDay.value);
+    var d2 = Timings.indexWhere((element) => element == selectedTiming.value);
+    print(d1);
+    print(d2);
+    print(d.day);
+    print(d);
+    print(d.add(Duration(
+      days: d.day + d1,
+      hours: 12 + d2,
+    )));
+
+    print(d.day + d1);
+    print(12 + d2);
+
     try {
       await FirebaseFirestore.instance
           .collection("appointmentList")
@@ -38,12 +53,25 @@ class AppointmentController extends GetxController with StateMixin {
           .update({
         "reservedTime": selectedTiming.value,
         "reservedDate": selectedDay.value,
+        "date_time": new DateTime(d.year, d.month, d.day + d1, 12 + d2, 0, 0),
         "reshedule": true,
       }).then((value) {
         print("Reshedule Successfull.");
         // Get.back();
         Get.snackbar("Success", "Appointment resheduled successfully.");
+
+        var a = appointments.firstWhere((p0) => p0.id == id);
+        a.date_time = new DateTime(d.year, d.month, d.day + d1, 12 + d2, 0, 0)
+            .microsecondsSinceEpoch;
+        a.reservedDate = selectedDay.value;
+        a.reservedTime = selectedTiming.value;
       });
+
+      appointments.sort((a, b) {
+        return a.date_time.compareTo(b.date_time);
+      });
+
+      update();
     } catch (e) {
       Get.snackbar("Error", "Error resheduling the appointment.");
     }
@@ -74,10 +102,10 @@ class AppointmentController extends GetxController with StateMixin {
     });
 
     d.forEach((ele) {
-      print(ele.data()["date_time"]);
-      var dt =
-          DateTime.fromMicrosecondsSinceEpoch(ele.data()["date_time"].seconds)
-              .millisecondsSinceEpoch;
+      // print(ele.data()["date_time"]);
+      var dt = DateTime.fromMicrosecondsSinceEpoch(
+              ele.data()["date_time"].seconds * 1000)
+          .millisecondsSinceEpoch;
       appointments.add(Appointment(
         id: ele.id,
         docName: ele.data()["docName"],

@@ -41,6 +41,8 @@ class AddPatientController extends GetxController with StateMixin {
     nameController.dispose();
     ageController.dispose();
     genderController.dispose();
+    emailController.dispose();
+
     super.onClose();
   }
 
@@ -82,9 +84,11 @@ class AddPatientController extends GetxController with StateMixin {
       }
 
       await FirebaseFirestore.instance
-          .collection("patients")
+          .collection("users")
           .doc(user!.uid)
-          .set(
+          .set({"role": "Patient"});
+
+      await FirebaseFirestore.instance.collection("patients").doc(user.uid).set(
         {
           "patientId": user.uid,
           "email": emailController.text,
@@ -94,6 +98,7 @@ class AddPatientController extends GetxController with StateMixin {
           "sex": genderController.text
         },
       ).then((value) {
+        isLoading(false);
         Get.snackbar(
           "Success",
           "Successfully added the user",
