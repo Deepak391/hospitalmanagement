@@ -203,15 +203,14 @@ class ApptController extends GetxController {
         FirebaseFirestore.instance.collection('appointmentList').doc();
 
     if (regularIsSelected == true) {
+      final docuser1 =
+          FirebaseFirestore.instance.collection('appointmentList').doc();
       for (int i = 0; i < 2; i++) {
         final currentDate =
             lastDayOfMonth.add(Duration(days: indexDaytime.value + i));
         DaytimeArr[indexDaytime.value + i][currentIndex.value]
             .update('status', (value) => 'filled');
-        await FirebaseFirestore.instance
-            .collection("appointmentList")
-            .doc(docuser.id)
-            .set({
+        await FirebaseFirestore.instance.collection("appointmentList").add({
           'id': docuser.id,
           'docName': docName,
           'docImage': docImage,
